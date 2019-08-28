@@ -15,7 +15,7 @@ public class Duke {
     private static void viewList(List<Task> wordList){
         System.out.println("____________________________________________");
         for(int i = 0; i < wordList.size(); ++i){
-            System.out.println((i+1) + ". " + wordList.get(i).getDescription());
+            System.out.println((i+1) + ". [" + wordList.get(i).getStatusIcon() + "]  " + wordList.get(i).getDescription());
         }
         System.out.println("____________________________________________");
     }
