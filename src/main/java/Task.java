@@ -15,5 +15,8 @@ public class Task {
         return this.description;
     }
 
-    //...
+    public void updateState() {
+        isDone = true;
+    }
+
 }

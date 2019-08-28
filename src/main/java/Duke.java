@@ -34,13 +34,21 @@ public class Duke {
                 + "____________________________________________\n");
 
 
-        Scanner input = new Scanner(System.in);
-        // Creating an ArrayList of String
-        List<Task> itemslist = new ArrayList<>();
+        Scanner input = new Scanner(System.in); // Simplify call to read input
+        List<Task> itemslist = new ArrayList<>(); // Creating an ArrayList of String
+        String inword = input.nextLine(); // Reading the whole line
 
-        String inword = input.nextLine();
         while (!inword.equals("bye")) {
+            String[] words = inword.split("\\s",0); // splits the string based on whitespace
             if (inword.equals("list")) {
+                viewList(itemslist);
+            }
+            else if (words[0].equals("done")){
+                for(Task w:itemslist) {
+                    if (words[1].equals(w.getDescription())) {
+                        w.updateState();
+                    }
+                }
                 viewList(itemslist);
             }
             else {
