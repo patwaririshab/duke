@@ -4,17 +4,18 @@ import java.util.Scanner;
 
 public class Duke {
 
-     private static void addWord(String word, List<String> wordList) {
-        wordList.add(word);
+     private static void addWord(String word, List<Task> wordList) {
+         Task tempTask = new Task(word);
+        wordList.add(tempTask);
         System.out.println("____________________________________________");
         System.out.println("  added: "+ word);
         System.out.println("____________________________________________");
     }
 
-    private static void viewList(List<String> wordList){
+    private static void viewList(List<Task> wordList){
         System.out.println("____________________________________________");
         for(int i = 0; i < wordList.size(); ++i){
-            System.out.println((i+1) + ". " + wordList.get(i));
+            System.out.println((i+1) + ". " + wordList.get(i).getDescription());
         }
         System.out.println("____________________________________________");
     }
@@ -35,13 +36,10 @@ public class Duke {
 
         Scanner input = new Scanner(System.in);
         // Creating an ArrayList of String
-        List<String> itemslist = new ArrayList<>();
-
-
+        List<Task> itemslist = new ArrayList<>();
 
         String inword = input.nextLine();
         while (!inword.equals("bye")) {
-
             if (inword.equals("list")) {
                 viewList(itemslist);
             }
