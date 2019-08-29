@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Duke {
-    public static String line = "____________________________________________\n";
+    public static String line = "________________________________________________________\n";
     private static void addWord(String word, List<Todo> wordList) {
          Todo tempTask = new Todo(word);
         wordList.add(tempTask);
@@ -171,7 +171,8 @@ public class Duke {
                     break;
 
                 default:
-                    addWord(indes, itemslist);
+//                    addWord(indes, itemslist);
+                    System.out.println(line + "\u2639 OOPS! I'm sorry, but I don't know what that means :-(\n" + line );
                     break;
             }
                 indes = input.nextLine();
