@@ -20,7 +20,7 @@ public class Duke {
                     System.out.println(" (by: " + ((Deadline) TaskList.get(i)).getBy() + ")");
                     break;
                 case E:
-                    System.out.println(" " + ((Event) TaskList.get(i)).getAt());
+                    System.out.println(" (at: " + ((Event) TaskList.get(i)).getAt());
                     break;
             }
         }
@@ -86,11 +86,11 @@ public class Duke {
          }
          return null;
      }
-    private static void addDeadline(List<Todo> TaskList, String description, String[] words){
+    private static void addSpecial(List<Todo> TaskList, String description, String[] words, String keyword){
         String by = null;
         int byIndex = 0;
         for(int i = 1; i < words.length; ++i){
-            if(words[i].equals("/by")){
+            if(words[i].equals("/"+ keyword)){
                 byIndex = i;
                 break;
             }
@@ -101,17 +101,32 @@ public class Duke {
             for(int i = byIndex + 1; i < words.length; ++i){
                 sb.append(words[i]);
             }
-            Deadline newDeadline = new Deadline(description, sb.toString());
-            TaskList.add(newDeadline);
-            System.out.println(line + "  Got it. I've added this task:\n"
-                    + "  [" + newDeadline.getType() + "] [" + newDeadline.isDone() + "]  " // to add type
-                    + newDeadline.getDescription() + " (by: "
-                    + newDeadline.getBy() + ")\n"
-                    + "  Now you have " + TaskList.size() + " tasks in the list.\n"
-                    + line);
+            Todo newTodo;
+            switch(keyword){
+                case("by"):
+                    newTodo = new Deadline(description, sb.toString());
+                    TaskList.add(newTodo);
+                    System.out.println(line + "  Got it. I've added this task:\n"
+                            + "    [" + newTodo.getType() + "] [" + newTodo.isDone() + "]  " // to add type
+                            + newTodo.getDescription() + " (" +keyword + ": "
+                            + ((Deadline) newTodo).getBy() + ")\n"
+                            + "  Now you have " + TaskList.size() + " tasks in the list.\n"
+                            + line);
+                    break;
+                case("at"):
+                    newTodo= new Event(description, sb.toString());
+                    TaskList.add(newTodo);
+                    System.out.println(line + "  Got it. I've added this task:\n"
+                            + "  [" + newTodo.getType() + "] [" + newTodo.isDone() + "]  " // to add type
+                            + newTodo.getDescription() + " (" +keyword + ": "
+                            + ((Event) newTodo).getAt() + ")\n"
+                            + "  Now you have " + TaskList.size() + " tasks in the list.\n"
+                            + line);
+            }
+
+
         }
         else {
-
             System.out.println(byIndex + " ERROR\n");
         }
     }
@@ -148,7 +163,10 @@ public class Duke {
                     addToDo(itemslist, getDescription(words, "todo"));
                     break;
                 case ("deadline"):
-                    addDeadline(itemslist, getDescription(words, "deadline"), words);
+                    addSpecial(itemslist, getDescription(words, "deadline"), words, "by");
+                    break;
+                case ("event"):
+                    addSpecial(itemslist, getDescription(words, "event"), words, "at");
                     break;
 
                 default:
