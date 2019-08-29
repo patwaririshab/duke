@@ -1,7 +1,5 @@
 import java.io.*;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -144,14 +142,11 @@ public class Duke {
             System.out.println(byIndex + " ERROR\n");
         }
     }
-    private static void loadFile(List<Todo> itemslist) {
-        String currentDir = System.getProperty("user.dir");
-        String filePath = currentDir + "/src/main/java/task.txt";
+    private static void loadFile(String filePath, List<Todo> itemslist) {
         try {
             List<String> lines = Files.readAllLines(Paths.get(filePath));
             for(String w:lines) {
                 String[] splitline = w.split(" " + "\\|" + " ", 0);
-
                 switch (splitline[0]) {
                     case("T"):
                         Todo temp = new Todo(splitline[2]);
@@ -180,6 +175,21 @@ public class Duke {
             System.out.println("Error reading file '" + filePath + "'");
         }
     }
+    private static void writeToFile(FileWriter fw, List<Todo> itemslist) throws IOException {
+        for(Todo item:itemslist){
+            switch(item.getType()){
+                case T:
+                    fw.write("T | " + (item.isDone().equals(true) ? "1" : "0") + " | " + item.getDescription() +'\n');
+                    break;
+                case D:
+                    fw.write("D | " + (item.isDone().equals(true) ? "1" : "0") + " | " + item.getDescription() + " | " + ((Deadline) item).getBy() + "\n");
+                    break;
+                case E:
+                    fw.write("E | " + (item.isDone().equals(true) ? "1" : "0") + " | " + item.getDescription() + " | " + ((Event) item).getAt() + "\n");
+                    break;
+            }
+        }
+    }
 
 
     public static void main(String[] args) {
@@ -199,7 +209,11 @@ public class Duke {
 
         Scanner input = new Scanner(System.in); // Simplify call to read input
         List<Todo> itemslist = new ArrayList<>(); // Creating an arraylist of todo class
-        loadFile(itemslist); // Load existing list from persistent storage and update itemslist
+
+        String currentDir = System.getProperty("user.dir");
+        String filePath = currentDir + "/src/main/java/task.txt";
+        loadFile(filePath, itemslist); // Load existing list from persistent storage and update itemslist
+
         String indes = input.nextLine(); // Reading the whole input description
         while (!indes.equals("bye")) {
             String[] words = indes.split("\\s", 0); //splitting input based on whitespaces
@@ -231,6 +245,21 @@ public class Duke {
 
                 indes = input.nextLine();
         }
+
+            // Updating persistent storage
+            try {
+                File fold = new File(filePath);
+                fold.delete();
+                FileWriter fw = new FileWriter(filePath);
+                writeToFile(fw, itemslist);
+                fw.close();
+            }
+            catch (IOException e) {
+                System.out.println("Something Went Wrong!");
+        }
+
+
+
             System.out.print( line + "  Bye. Hope to see you again soon!\n" + line);
             System.exit(0);
     }

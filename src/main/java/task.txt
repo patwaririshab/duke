@@ -1,4 +1,5 @@
-T | 1 | read book
-D | 0 | return book | June 6th
-E | 0 | project meeting | Aug 6th 2-4pm
-T | 1 | join sports club
+T | 0 | fuck
+T | 0 | fuck
+D | 0 | fuck ashleigh | now
+E | 0 | im donw | now
+T | 0 | 1 /by tmr
