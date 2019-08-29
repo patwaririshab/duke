@@ -1,12 +1,18 @@
+import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+
 
 public class Duke {
     public static String line = "________________________________________________________\n";
-    private static void addWord(String word, List<Todo> wordList) {
-         Todo tempTask = new Todo(word);
-        wordList.add(tempTask);
-        System.out.print(line + "  added: "+ word + '\n' + line);
-    }
+//    private static void addWord(String word, List<Todo> wordList) {
+//         Todo tempTask = new Todo(word);
+//        wordList.add(tempTask);
+//        System.out.print(line + "  added: "+ word + '\n' + line);
+//    }
     private static void viewList(List<Todo> TaskList){
         System.out.print(line + "  Here are the tasks in your list:\n");
         for(int i = 0; i < TaskList.size(); ++i){
@@ -138,6 +144,42 @@ public class Duke {
             System.out.println(byIndex + " ERROR\n");
         }
     }
+    private static void loadFile(List<Todo> itemslist) {
+        String currentDir = System.getProperty("user.dir");
+        String filePath = currentDir + "/src/main/java/task.txt";
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(filePath));
+            for(String w:lines) {
+                String[] splitline = w.split(" " + "\\|" + " ", 0);
+
+                switch (splitline[0]) {
+                    case("T"):
+                        Todo temp = new Todo(splitline[2]);
+                        if (splitline[1].equals("1")) temp.setDone();
+                        itemslist.add(temp);
+                        break;
+                    case("D"):
+                        Deadline temp2 = new Deadline(splitline[2],splitline[3]);
+                        if (splitline[1].equals("1")) temp2.setDone();
+                        itemslist.add(temp2);
+                        break;
+                    case("E"):
+                        Event temp3 = new Event(splitline[2],splitline[3]);
+                        if (splitline[1].equals("1")) temp3.setDone();
+                        itemslist.add(temp3);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        catch (FileNotFoundException ex) {
+            System.out.println("Unable to open file '" + filePath + "'");
+        }
+        catch (IOException ex) {
+            System.out.println("Error reading file '" + filePath + "'");
+        }
+    }
 
 
     public static void main(String[] args) {
@@ -157,6 +199,7 @@ public class Duke {
 
         Scanner input = new Scanner(System.in); // Simplify call to read input
         List<Todo> itemslist = new ArrayList<>(); // Creating an arraylist of todo class
+        loadFile(itemslist); // Load existing list from persistent storage and update itemslist
         String indes = input.nextLine(); // Reading the whole input description
         while (!indes.equals("bye")) {
             String[] words = indes.split("\\s", 0); //splitting input based on whitespaces
