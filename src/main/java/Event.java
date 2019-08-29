@@ -11,7 +11,7 @@ public class Event extends Todo {
     }
 
     public String getAt() {
-        return at;
+        return (myDateTime.getDate() + "," + myDateTime.getTime());
     }
 
     public String storeDateAndTime() {

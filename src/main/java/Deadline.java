@@ -8,11 +8,10 @@ public class Deadline extends Todo {
         Type = TypeClass.D; //updates Type to D
         by = deadline;
         myDateTime = new DateAndTime(by);
-        System.out.println(myDateTime.getDate());
     }
 
     public String getBy() {
-        return myDateTime.getDate();
+        return (myDateTime.getDate()+ "," + myDateTime.getTime());
     }
 
     public String storeDateAndTime() {
