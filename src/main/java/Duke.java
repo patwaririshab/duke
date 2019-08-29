@@ -21,10 +21,10 @@ public class Duke {
                     System.out.println();
                     break;
                 case D:
-                    System.out.println(" (by: " + ((Deadline) TaskList.get(i)).getBy() + ")");
+                    System.out.println(" (by: " + ((Deadline) TaskList.get(i)).getAppointment() + ")");
                     break;
                 case E:
-                    System.out.println(" (at: " + ((Event) TaskList.get(i)).getAt() + ")");
+                    System.out.println(" (at: " + ((Event) TaskList.get(i)).getAppointment() + ")");
                     break;
             }
         }
@@ -131,7 +131,7 @@ public class Duke {
                     System.out.println(line + "  Got it. I've added this task:\n"
                             + "    [" + newTodo.getType() + "] [" + newTodo.isDone() + "]  " // to add type
                             + newTodo.getDescription() + " (" +keyword + ": "
-                            + ((Event) newTodo).getAt() + ")\n"
+                            + ((Event) newTodo).getAppointment() + ")\n"
                             + "  Now you have " + TaskList.size() + " tasks in the list.\n"
                             + line);
             }

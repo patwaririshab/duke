@@ -59,30 +59,23 @@ public class DateAndTime {
     public String getDate() {
         month = new HashMap();
         mapMonths(month);
-        return ( Integer.toString(date) + getEnding(date) + " of " + month.get(numerical_month) + " " + Integer.toString(year));
+        return ( date + getEnding(date) + " of " + month.get(numerical_month) + " " + year);
     }
 
     public String getTime() {
-
-
         String input = Integer.toString(numerical_time);
-        //Format of the date defined in the input String
-        DateFormat df = new SimpleDateFormat("HHMM");
-        //Desired format: 24 hour format: Change the pattern as per the need
+        DateFormat oldformat = new SimpleDateFormat("HHmm");
+
         DateFormat outputformat = new SimpleDateFormat("hh:mm aa");
-        String output = null;
-        Date trial = null;
+        String time12hr = null;
+        Date time24hr = null;
         try{
-            //Converting the input String to Date
-            trial = df.parse(input);
-            //Changing the format of date and storing it in String
-            output = outputformat.format(trial);
-            //Displaying the date
-            System.out.println(output);
+            time24hr = oldformat.parse(input);
+            time12hr = outputformat.format(time24hr);
         }catch(ParseException pe){
             pe.printStackTrace();
         }
-        return output;
+        return time12hr;
 
     }
 }
