@@ -49,9 +49,12 @@ public class Duke {
                 System.out.println(line + " \u2639 OOPS!!! The description of a todo cannot be empty.\n" + line);
             }
     }
-    private static String getCommandWord(String indes){
+    private static String getCommandWord(String indes) throws InvalidInputException {
         String[] words = indes.split("\\s",0); // splits the string based on whitespace
-        return words[0];
+        if (words[0].equals("todo") || words[0].equals("done") ||words[0].equals("list") ||words[0].equals("event") || words[0].equals("deadline") )
+            return words[0];
+        else
+            throw new InvalidInputException(words[0]);
      }
     private static String getDescription(String[] words, String type) {
         switch(type){
@@ -157,29 +160,32 @@ public class Duke {
         String indes = input.nextLine(); // Reading the whole input description
         while (!indes.equals("bye")) {
             String[] words = indes.split("\\s", 0); //splitting input based on whitespaces
-
-            switch(getCommandWord(indes)) {
-                case ("list"):
-                    viewList(itemslist);
-                    break;
-                case ("done"):
-                    updateDone(itemslist, getDescription(words, "done"));
-                    break;
-                case ("todo"):
-                    addToDo(itemslist, getDescription(words, "todo"), words);
-                    break;
-                case ("deadline"):
-                    addSpecial(itemslist, getDescription(words, "deadline"), words, "by");
-                    break;
-                case ("event"):
-                    addSpecial(itemslist, getDescription(words, "event"), words, "at");
-                    break;
-
-                default:
-//                    addWord(indes, itemslist);
-                    System.out.println(line + "\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(\n" + line );
-                    break;
+            try {
+                switch (getCommandWord(indes)) {
+                    case ("list"):
+                        viewList(itemslist);
+                        break;
+                    case ("done"):
+                        updateDone(itemslist, getDescription(words, "done"));
+                        break;
+                    case ("todo"):
+                        addToDo(itemslist, getDescription(words, "todo"), words);
+                        break;
+                    case ("deadline"):
+                        addSpecial(itemslist, getDescription(words, "deadline"), words, "by");
+                        break;
+                    case ("event"):
+                        addSpecial(itemslist, getDescription(words, "event"), words, "at");
+                        break;
+//                default:
+////                    addWord(indes, itemslist);
+//                    System.out.println(line + "\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(\n" + line );
+//                    break;
+                }
+            } catch (InvalidInputException e) {
+                      System.out.println(line + "\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(\n" + line );
             }
+
                 indes = input.nextLine();
         }
             System.out.print( line + "  Bye. Hope to see you again soon!\n" + line);
