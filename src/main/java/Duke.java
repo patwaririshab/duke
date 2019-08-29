@@ -35,16 +35,20 @@ public class Duke {
                 + "  [" + itemslist.get(itemNo -1).isDone() + "] " + itemslist.get(itemNo - 1).getDescription() + "\n"
                 + line);
     }
-    private static void addToDo(List<Todo> itemslist , String description) {
-         Todo tempTask = new Todo(description);
-         itemslist.add(tempTask);
-         System.out.println(line + "  Got it. I've added this task:\n"
-                                 + "    [T] [" + tempTask.isDone() + "]  " // to add type
-                                 + tempTask.getDescription() + "\n"
-                                 + "  Now you have " + itemslist.size() + " tasks in the list.\n"
-                                 + line);
-
-    } //to change print for type
+    private static void addToDo(List<Todo> itemslist , String description, String[] words) {
+            try {
+                String test_input = words[1]; //try to purposely access second element of the array to check for input
+                Todo tempTask = new Todo(description);
+                itemslist.add(tempTask);
+                System.out.println(line + "  Got it. I've added this task:\n"
+                        + "    [T] [" + tempTask.isDone() + "]  " // to add type
+                        + tempTask.getDescription() + "\n"
+                        + "  Now you have " + itemslist.size() + " tasks in the list.\n"
+                        + line);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(line + " \u2639 OOPS!!! The description of a todo cannot be empty.\n" + line);
+            }
+    }
     private static String getCommandWord(String indes){
         String[] words = indes.split("\\s",0); // splits the string based on whitespace
         return words[0];
@@ -153,6 +157,7 @@ public class Duke {
         String indes = input.nextLine(); // Reading the whole input description
         while (!indes.equals("bye")) {
             String[] words = indes.split("\\s", 0); //splitting input based on whitespaces
+
             switch(getCommandWord(indes)) {
                 case ("list"):
                     viewList(itemslist);
@@ -161,7 +166,7 @@ public class Duke {
                     updateDone(itemslist, getDescription(words, "done"));
                     break;
                 case ("todo"):
-                    addToDo(itemslist, getDescription(words, "todo"));
+                    addToDo(itemslist, getDescription(words, "todo"), words);
                     break;
                 case ("deadline"):
                     addSpecial(itemslist, getDescription(words, "deadline"), words, "by");
@@ -172,7 +177,7 @@ public class Duke {
 
                 default:
 //                    addWord(indes, itemslist);
-                    System.out.println(line + "\u2639 OOPS! I'm sorry, but I don't know what that means :-(\n" + line );
+                    System.out.println(line + "\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(\n" + line );
                     break;
             }
                 indes = input.nextLine();
