@@ -20,7 +20,7 @@ public class Duke {
                     System.out.println(" (by: " + ((Deadline) TaskList.get(i)).getBy() + ")");
                     break;
                 case E:
-                    System.out.println(" (at: " + ((Event) TaskList.get(i)).getAt());
+                    System.out.println(" (at: " + ((Event) TaskList.get(i)).getAt() + ")");
                     break;
             }
         }
@@ -39,7 +39,7 @@ public class Duke {
          Todo tempTask = new Todo(description);
          itemslist.add(tempTask);
          System.out.println(line + "  Got it. I've added this task:\n"
-                                 + "  [T] [" + tempTask.isDone() + "]  " // to add type
+                                 + "    [T] [" + tempTask.isDone() + "]  " // to add type
                                  + tempTask.getDescription() + "\n"
                                  + "  Now you have " + itemslist.size() + " tasks in the list.\n"
                                  + line);
@@ -97,14 +97,15 @@ public class Duke {
 //            System.out.println("DID NOT FIND BY at '" + words[i]+ "'");
         }
         if (byIndex != 0){
-            StringBuilder sb = new StringBuilder();
+            Vector<String> sb = new Vector<String>(50);
             for(int i = byIndex + 1; i < words.length; ++i){
-                sb.append(words[i]);
+                sb.add(words[i]);
             }
+            String resultantString = String.join(" ", sb);
             Todo newTodo;
             switch(keyword){
                 case("by"):
-                    newTodo = new Deadline(description, sb.toString());
+                    newTodo = new Deadline(description, resultantString);
                     TaskList.add(newTodo);
                     System.out.println(line + "  Got it. I've added this task:\n"
                             + "    [" + newTodo.getType() + "] [" + newTodo.isDone() + "]  " // to add type
@@ -114,10 +115,10 @@ public class Duke {
                             + line);
                     break;
                 case("at"):
-                    newTodo= new Event(description, sb.toString());
+                    newTodo= new Event(description, resultantString);
                     TaskList.add(newTodo);
                     System.out.println(line + "  Got it. I've added this task:\n"
-                            + "  [" + newTodo.getType() + "] [" + newTodo.isDone() + "]  " // to add type
+                            + "    [" + newTodo.getType() + "] [" + newTodo.isDone() + "]  " // to add type
                             + newTodo.getDescription() + " (" +keyword + ": "
                             + ((Event) newTodo).getAt() + ")\n"
                             + "  Now you have " + TaskList.size() + " tasks in the list.\n"
