@@ -11,9 +11,12 @@ public class Deadline extends Todo {
     }
 
     public String getBy() {
-        return (myDateTime.getDate()+ "," + myDateTime.getTime());
+        return by;
     }
 
+    public String getAppointment() {
+        return (myDateTime.getDate()+ "," + myDateTime.getTime());
+    }
     public String storeDateAndTime() {
         return "null";
     }

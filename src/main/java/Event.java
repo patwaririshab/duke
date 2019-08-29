@@ -11,9 +11,12 @@ public class Event extends Todo {
     }
 
     public String getAt() {
-        return (myDateTime.getDate() + "," + myDateTime.getTime());
+        return at;
     }
 
+    public String getAppointment() {
+        return (myDateTime.getDate()+ "," + myDateTime.getTime());
+    }
     public String storeDateAndTime() {
         return "null";
     }

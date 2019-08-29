@@ -121,7 +121,7 @@ public class Duke {
                     System.out.println(line + "  Got it. I've added this task:\n"
                             + "    [" + newTodo.getType() + "] [" + newTodo.isDone() + "]  " // to add type
                             + newTodo.getDescription() + " (" +keyword + ": "
-                            + ((Deadline) newTodo).getBy() + ")\n"
+                            + ((Deadline) newTodo).getAppointment() + ")\n"
                             + "  Now you have " + TaskList.size() + " tasks in the list.\n"
                             + line);
                     break;
