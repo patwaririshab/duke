@@ -32,7 +32,7 @@ public class Duke {
     }
     private static void updateDone(ArrayList<Todo> itemslist , String words) {
         int itemNo = Integer.parseInt(words);
-        System.out.println("'" + words+"'");
+//        System.out.println("'" + words+"'");
          itemslist.get(itemNo - 1).setDone();
         System.out.println(line
                 + "Nice! I've marked this task as done:\n"
@@ -55,7 +55,7 @@ public class Duke {
     }
     private static String getCommandWord(String indes) throws InvalidInputException {
         String[] words = indes.split("\\s",0); // splits the string based on whitespace
-        if (words[0].equals("todo") || words[0].equals("done") ||words[0].equals("list") ||words[0].equals("event") || words[0].equals("deadline") )
+        if (words[0].equals("todo") || words[0].equals("done") ||words[0].equals("list") ||words[0].equals("event") || words[0].equals("deadline") || words[0].equals("delete"))
             return words[0];
         else
             throw new InvalidInputException(words[0]);
@@ -191,6 +191,32 @@ public class Duke {
             }
         }
     }
+    private static void deleteTask(ArrayList<Todo> TaskList, String deleteIndex){
+        try {
+            int delete = Integer.parseInt(deleteIndex);
+            Todo temp = TaskList.get(delete - 1);
+            TaskList.remove((delete - 1));
+            String temptext = String.format("  Now you have %d tasks in the list.", TaskList.size()) + "\n" + line;
+            switch (temp.getType()) {
+                case T:
+                    System.out.println(line + "  Noted. I have removed this task:\n" + "    [" + temp.getType() + "] " + "[" + temp.isDone() + "] " + temp.getDescription());
+                    System.out.print(temptext);
+                    break;
+                case D:
+                    System.out.println(line + "  Noted. I have removed this task:\n" + "    [" + temp.getType() + "] " + "[" + temp.isDone() + "] " + temp.getDescription()
+                            + " (by: " + ((Deadline) temp).getAppointment() + ")");
+                    System.out.print(temptext);
+                    break;
+                case E:
+                    System.out.println(line + "  Noted. I have removed this task:\n" + "    [" + temp.getType() + "] " + "[" + temp.isDone() + "] " + temp.getDescription()
+                            + " (at: " + ((Event) temp).getAppointment() + ")");
+                    System.out.print(temptext);
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(line + "  Unable to delete task, could you double check the index of the task you want to delete?\n" + line);
+        }
+    }
 
 
     public static void main(String[] args) {
@@ -234,6 +260,9 @@ public class Duke {
                         break;
                     case ("event"):
                         addSpecial(itemslist, getDescription(words, "event"), words, "at");
+                        break;
+                    case ("delete"):
+                        deleteTask(itemslist, getDescription(words, "done"));
                         break;
 //                default:
 ////                    addWord(indes, itemslist);

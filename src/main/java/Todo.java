@@ -16,7 +16,7 @@ public class Todo extends Task {
     }
 
     public void setDone() {
-        isDone = true;
+        isDone = !isDone;
     }
 
     public TypeClass getType() {
