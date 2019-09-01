@@ -64,14 +64,14 @@ public class DateAndTime {
 
     public String getTime() {
         String input = Integer.toString(numerical_time);
-        DateFormat oldformat = new SimpleDateFormat("HHmm");
+        DateFormat oldFormat = new SimpleDateFormat("HHmm");
 
-        DateFormat outputformat = new SimpleDateFormat("hh:mm aa");
+        DateFormat outputFormat = new SimpleDateFormat("hh:mm aa");
         String time12hr = null;
         Date time24hr = null;
         try{
-            time24hr = oldformat.parse(input);
-            time12hr = outputformat.format(time24hr);
+            time24hr = oldFormat.parse(input);
+            time12hr = outputFormat.format(time24hr);
         }catch(ParseException pe){
             pe.printStackTrace();
         }
