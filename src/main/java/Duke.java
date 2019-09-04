@@ -1,7 +1,9 @@
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+
 
 
 public class Duke {
@@ -220,8 +222,9 @@ public class Duke {
 
 
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
+        String logo =
+                  " ____        _\n"
+                + "|  _ \\ _   _| | _____\n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
@@ -239,7 +242,19 @@ public class Duke {
 
         String currentDir = System.getProperty("user.dir");
         String filePath = currentDir + "/src/main/java/task.txt";
-        loadFile(filePath, itemslist); // Load existing list from persistent storage and update itemslist
+        Path path = Paths.get(filePath);
+        if (Files.exists(path)) {
+            loadFile(filePath, itemslist); // Load existing list from persistent storage and update itemslist
+        }
+        else {
+            try {
+                FileWriter fw = new FileWriter(filePath);
+                fw.close();
+            } catch (IOException e) {
+                System.out.println("Something went wrong");
+            }
+        }
+
 
         String indes = input.nextLine(); // Reading the whole input description
         while (!indes.equals("bye")) {
