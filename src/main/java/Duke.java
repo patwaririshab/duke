@@ -3,7 +3,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-
 public class Duke {
     public static String line = "________________________________________________________\n";
 //    private static void addWord(String word, List<Todo> wordList) {
@@ -11,8 +10,7 @@ public class Duke {
 //        wordList.add(tempTask);
 //        System.out.print(line + "  added: "+ word + '\n' + line);
 //    }
-    private static void viewList(List<Todo> TaskList){
-        System.out.print(line + "  Here are the tasks in your list:\n");
+    public static void viewList(List<Todo> TaskList){
         for(int i = 0; i < TaskList.size(); ++i){
             System.out.print("  " + (i+1) + ". [" + TaskList.get(i).getType() + "] ["
                     + TaskList.get(i).isDone() + "]  " + TaskList.get(i).getDescription());
@@ -53,9 +51,9 @@ public class Duke {
                 System.out.println(line + " \u2639 OOPS!!! The description of a todo cannot be empty.\n" + line);
             }
     }
-    private static String getCommandWord(String indes) throws InvalidInputException {
+    private static String getCommandWord(String indes) throws InvalidInputException { // ! UPDATE whenever you add new command word
         String[] words = indes.split("\\s",0); // splits the string based on whitespace
-        if (words[0].equals("todo") || words[0].equals("done") ||words[0].equals("list") ||words[0].equals("event") || words[0].equals("deadline") )
+        if (words[0].equals("todo") || words[0].equals("done") ||words[0].equals("list") ||words[0].equals("event") || words[0].equals("deadline") || words[0].equals("find") )
             return words[0];
         else
             throw new InvalidInputException(words[0]);
@@ -64,8 +62,10 @@ public class Duke {
         switch(type){
              case ("done"):
                  return words[1];
+
              case ("todo"):
-                 StringJoiner sj = new StringJoiner(" ");
+             case ("find"):
+                StringJoiner sj = new StringJoiner(" ");
                  for (int i = 1; i < words.length; ++i) {
                      sj.add(words[i]);
                  }
@@ -92,7 +92,7 @@ public class Duke {
                      }
                  }
                  break;
-             default:
+            default:
                  break;
          }
          return null;
@@ -208,7 +208,7 @@ public class Duke {
 
 
         Scanner input = new Scanner(System.in); // Simplify call to read input
-        List<Todo> itemslist = new ArrayList<>(); // Creating an arraylist of todo class
+        ArrayList<Todo> itemslist = new ArrayList<>(); // Creating an arraylist of todo class
 
         String currentDir = System.getProperty("user.dir");
         String filePath = currentDir + "/src/main/java/task.txt";
@@ -218,8 +218,9 @@ public class Duke {
         while (!indes.equals("bye")) {
             String[] words = indes.split("\\s", 0); //splitting input based on whitespaces
             try {
-                switch (getCommandWord(indes)) {
+                switch (getCommandWord(indes)) { //remember to update the list of acceptable words in the method if adding new commands
                     case ("list"):
+                        System.out.print(line + "  Here are the tasks in your list:\n");
                         viewList(itemslist);
                         break;
                     case ("done"):
@@ -233,6 +234,9 @@ public class Duke {
                         break;
                     case ("event"):
                         addSpecial(itemslist, getDescription(words, "event"), words, "at");
+                        break;
+                    case ("find"):
+                        find.searchList(itemslist, getDescription(words, "find"));
                         break;
 //                default:
 ////                    addWord(indes, itemslist);
