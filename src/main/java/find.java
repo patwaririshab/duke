@@ -1,25 +1,25 @@
 import java.util.ArrayList;
 
-public class find extends Duke{
+public class find {
     private String keyword;
     private ArrayList<Todo> tasklist;
-
 
     private static void showSearchResult(ArrayList<Todo> searchResult) {
         if(searchResult.size() == 0) {
             System.out.println("No task matching query was found, please refine your search!\n");
         } else {
-            System.out.print(line + "  Here are the tasks in your list:\n");
-            Duke.viewList(searchResult);
+            System.out.print(Duke.line + "  Here are the tasks in your list:\n");
+            TaskList.viewList(searchResult);
         }
     }
 
-    public  find( ArrayList<Todo> tasklist, String keyword) {
+    public  find(TaskList tasks, String keyword) {
             this.keyword = keyword;
-            this.tasklist = tasklist;
+            this.tasklist = tasks.getTaskList();
     }
     public static void searchList(ArrayList<Todo> tasklist, String keyword){
         // Get all the descriptions
+
         String[] splitKeywords = keyword.split(" ", 0);
         ArrayList<Todo> printlist = new ArrayList<>();
         
