@@ -12,8 +12,8 @@ public class Duke {
 //        wordList.add(tempTask);
 //        System.out.print(line + "  added: "+ word + '\n' + line);
 //    }
-    private static void viewList(ArrayList<Todo> TaskList){
-        System.out.print(line + "  Here are the tasks in your list:\n");
+    public static void viewList(ArrayList<Todo> TaskList){
+//        System.out.print(line + "  Here are the tasks in your list:\n");
         for(int i = 0; i < TaskList.size(); ++i){
             System.out.print("  " + (i+1) + ". [" + TaskList.get(i).getType() + "] ["
                     + TaskList.get(i).isDone() + "]  " + TaskList.get(i).getDescription());
@@ -280,6 +280,7 @@ public class Duke {
                         break;
                     case ("delete"):
                         deleteTask(itemslist, getDescription(words, "done"));
+                        break;
                     case ("find"):
                         find.searchList(itemslist, getDescription(words, "find"));
                         break;

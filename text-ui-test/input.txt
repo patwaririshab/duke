@@ -5,4 +5,7 @@ list
 done 1
 delete 2
 list
+find event A
+find 14th of May 2019
+find 15th
 bye
