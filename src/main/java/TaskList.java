@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.Vector;
 
+
+/**
+ * TaskList contains a collection of Tasks. The tasks can be viewed as a list, their status updated,
+ * and addition and deletion of tasks can be done through the methods of this class.
+ */
 public class TaskList {
     private ArrayList<Todo> TaskList;
 

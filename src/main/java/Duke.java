@@ -1,3 +1,13 @@
+/**
+ * This Duke program implements a command line application which allows users to store
+ * their tasks such as Todo, Deadline and Events to a local persistent storage.
+ *
+ * @author rishabpatwari
+ * @version 1.o
+ *
+ */
+
+
 public class Duke {
     public static String line = "________________________________________________________\n";
     private Storage storage;
