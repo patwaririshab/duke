@@ -1,6 +1,5 @@
 public class Deadline extends Todo {
     protected String by; //stores the date/time deadline
-
     protected DateAndTime myDateTime;
 
     public Deadline(String description, String deadline) {

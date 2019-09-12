@@ -4,7 +4,7 @@ import java.util.Vector;
 public class TaskList {
     private ArrayList<Todo> TaskList;
 
-    public static void viewList(ArrayList<Todo> TaskList) {
+    public void viewList(){
         for(int i = 0; i < TaskList.size(); ++i){
             System.out.print("  " + (i+1) + ". [" + TaskList.get(i).getType() + "] ["
                     + TaskList.get(i).isDone() + "]  " + TaskList.get(i).getDescription());
@@ -22,7 +22,6 @@ public class TaskList {
         }
         System.out.print(Duke.line);
     }
-
     public void updateDone(String words) {
         int itemNo = Integer.parseInt(words);
         TaskList.get(itemNo - 1).setDone();
@@ -44,24 +43,6 @@ public class TaskList {
         } catch (IndexOutOfBoundsException e) {
             System.out.println(Duke.line + " \u2639 OOPS!!! The description of a todo cannot be empty.\n" + Duke.line);
         }
-    }
-    public void viewList(){
-        for(int i = 0; i < TaskList.size(); ++i){
-            System.out.print("  " + (i+1) + ". [" + TaskList.get(i).getType() + "] ["
-                    + TaskList.get(i).isDone() + "]  " + TaskList.get(i).getDescription());
-            switch (TaskList.get(i).getType()){
-                case T:
-                    System.out.println();
-                    break;
-                case D:
-                    System.out.println(" (by: " + ((Deadline) TaskList.get(i)).getAppointment() + ")");
-                    break;
-                case E:
-                    System.out.println(" (at: " + ((Event) TaskList.get(i)).getAppointment() + ")");
-                    break;
-            }
-        }
-        System.out.print(Duke.line);
     }
     public void addSpecial(String description, String[] words, String keyword){
         try {
@@ -135,11 +116,9 @@ public class TaskList {
             System.out.println(Duke.line + "  Unable to delete task, could you double check the index of the task you want to delete?\n" + Duke.line);
         }
     }
-
     public ArrayList<Todo> getTaskList() {
         return TaskList;
     }
-
 
     public TaskList() {
         this.TaskList = new ArrayList<Todo>();

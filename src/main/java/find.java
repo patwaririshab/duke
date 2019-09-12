@@ -15,8 +15,8 @@ public class find {
             System.out.println("No task matching query was found, please refine your search!\n");
         } else {
             System.out.print(Duke.line + "  Here are the tasks in your list:\n");
-
-            TaskList.viewList(searchResult);
+            TaskList tempTaskList = new TaskList(searchResult);
+            tempTaskList.viewList();
         }
     }
 
@@ -24,88 +24,41 @@ public class find {
             this.keyword = keyword;
             this.tasklist = tasks.getTaskList();
     }
-
     public static void searchTaskList(TaskList taskList, String searchdescription) {
         String[] searchwords = searchdescription.split(" ", 0); //Creates a iterable array of search words
+        ArrayList<Todo> returnList = new ArrayList<>();
 
         //For each task in taskList, check if it matches any search word
-        for (Task task:taskList.getTaskList()){
+        for (Todo task:taskList.getTaskList()){
             ArrayList<String> taskwords = new ArrayList<>();
             //Add all the words of the task description to the taskwords
             taskwords.addAll(Arrays.asList(task.getDescription().split(" ",0)));
-            switch (((Todo) task).getType()){
+            switch (task.getType()){
                 case D:
                     taskwords.addAll(Arrays.asList(((Deadline) task).getAppointment().split(" ")));
+                    taskwords.addAll(Arrays.asList(((Deadline) task).getBy().split(" ")));
                     break;
                 case E:
                     taskwords.addAll(Arrays.asList(((Event) task).getAppointment().split(" ")));
+                    taskwords.addAll(Arrays.asList(((Event) task).getAt().split(" ")));
                     break;
                 default:
                     break;
             }
 
-//            boolean flag = false;
-//            for()
-//                if(flag == true){ break;}
-
-
-
-        }
-
-
-
-    }
-
-
-
-    public static void searchList(ArrayList<Todo> tasklist, String keyword){
-        // Get all the descriptions
-
-        String[] splitKeywords = keyword.split(" ", 0);
-
-       ArrayList<Todo> printlist = new ArrayList<>();
-
-
-        //For entries in tasklist
-        for(Todo a:tasklist) {
-            //Split each entry's description into keywords
-            String[] splitTaskKeywords = a.getDescription().split(" ", 0);
-            String[] words = new String[0];
-                switch (a.getType()){
-                    case D:
-                        words = ((Deadline) a).getAppointment().split(" ");
-                        break;
-                    case E:
-                        words = ((Event) a).getAppointment().split(" ");
-                        break;
-                    default:
-                        break;
-            }
-
+            // Iterate through searchwords and taskwords and check if any words match, if so break and add to return list
             boolean flag = false;
-            
-            for(String b:splitKeywords){
-                if (flag == true ) break;
-                for (String c:splitTaskKeywords) {
-                    if(b.equals(c)){
-                        printlist.add(a);
+            for(String word:searchwords){
+                if (flag) {break;}
+                for(String taskword:taskwords){
+                    if(word.equals(taskword)){
+                        returnList.add(task);
                         flag = true;
                         break;
                     }
                 }
-                if (!(a.getType() == Todo.TypeClass.T)) {
-                    if (flag == true) break;
-                    //Check if the appointment is in keyword
-                    for(String d:words) {
-                        if(b.equals(d)) {
-                            printlist.add(a);
-                            flag = true;
-                            break;
-                        }
-                    }
-                }
             }
         }
-        showSearchResult(printlist);
+        showSearchResult(returnList);
     }
 }

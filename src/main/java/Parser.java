@@ -82,7 +82,7 @@ public class Parser {
                         tasks.deleteTask(getDescription(words, "done"));
                         break;
                     case ("find"):
-                        find.searchList(tasks.getTaskList(), getDescription(words, "find"));
+                        find.searchTaskList(tasks, getDescription(words, "find"));
                         break;
                 }
             } catch (InvalidInputException e) {
