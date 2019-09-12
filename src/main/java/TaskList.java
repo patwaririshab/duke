@@ -23,12 +23,18 @@ public class TaskList {
         System.out.print(Duke.line);
     }
     public void updateDone(String words) {
-        int itemNo = Integer.parseInt(words);
-        TaskList.get(itemNo - 1).setDone();
-        System.out.println(Duke.line
-                + "Nice! I've marked this task as done:\n"
-                + "  [" + TaskList.get(itemNo -1).isDone() + "] " + TaskList.get(itemNo - 1).getDescription() + "\n"
-                + Duke.line);
+        try {
+            int itemNo = Integer.parseInt(words);
+            TaskList.get(itemNo - 1).setDone();
+            System.out.println(Duke.line
+                    + "Nice! I've marked this task as done:\n"
+                    + "  [" + TaskList.get(itemNo - 1).isDone() + "] " + TaskList.get(itemNo - 1).getDescription() + "\n"
+                    + Duke.line);
+        } catch(Exception e) {
+            System.out.println(Duke.line
+                            + "Oops! I could not update the indicated task index. Could you re-enter the task you want to update? Here is your current tasklist:");
+            this.viewList();
+        }
     }
     public void addToDo( String description, String[] words) {
         try {

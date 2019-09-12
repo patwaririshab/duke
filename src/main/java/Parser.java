@@ -11,6 +11,7 @@ import java.util.StringJoiner;
 public class Parser {
 
     private String line = Duke.line;
+
     private static String getCommandWord(String indes) throws InvalidInputException { // ! UPDATE whenever you add new command word
         String[] words = indes.split("\\s",0); // splits the string based on whitespace
         if (words[0].equals("todo") || words[0].equals("done") ||words[0].equals("list") ||words[0].equals("event") || words[0].equals("deadline") || words[0].equals("find") || words[0].equals("delete"))
@@ -57,7 +58,6 @@ public class Parser {
         }
         return null;
     }
-
     public void processInput(TaskList tasks, String indes) {
             String[] words = indes.split("\\s", 0); //splitting input based on whitespaces
             try {
@@ -89,7 +89,6 @@ public class Parser {
                 System.out.println(line + "\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(\n" + line );
             }
     }
-
     public Parser() {
     }
 
