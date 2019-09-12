@@ -64,23 +64,23 @@ public class Storage {
         for(Todo item:itemslist){
             switch(item.getType()){
                 case T:
-                    fw.write("T | " + (item.isDone().equals(true) ? "1" : "0") + " | " + item.getDescription() +'\n');
+                    fw.write("T | " + (item.getDone() ? "1" : "0") + " | " + item.getDescription() +'\n');
                     break;
                 case D:
-                    fw.write("D | " + (item.isDone().equals(true) ? "1" : "0") + " | " + item.getDescription() + " | " + ((Deadline) item).getBy() + "\n");
+                    fw.write("D | " + (item.getDone() ? "1" : "0") + " | " + item.getDescription() + " | " + ((Deadline) item).getBy() + "\n");
                     break;
                 case E:
-                    fw.write("E | " + (item.isDone().equals(true) ? "1" : "0") + " | " + item.getDescription() + " | " + ((Event) item).getAt() + "\n");
+                    fw.write("E | " + (item.getDone() ? "1" : "0") + " | " + item.getDescription() + " | " + ((Event) item).getAt() + "\n");
                     break;
             }
         }
     }
-    public void updateStorage(String filePath) { // Updating persistent storage
+    public void updateStorage(TaskList taskList) { // Updating persistent storage
         try {
             File fold = new File(filePath);
             fold.delete();
             FileWriter fw = new FileWriter(filePath);
-            writeToFile(fw, itemslist);
+            writeToFile(fw, taskList.getTaskList());
             fw.close();
         }
         catch (IOException e) {

@@ -139,8 +139,10 @@ public class TaskList {
     public ArrayList<Todo> getTaskList() {
         return TaskList;
     }
-    public TaskList() {
 
+
+    public TaskList() {
+        this.TaskList = new ArrayList<Todo>();
     }
     public TaskList(ArrayList<Todo> itemsList) {
         this.TaskList = itemsList;

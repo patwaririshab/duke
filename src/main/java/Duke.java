@@ -5,10 +5,10 @@ public class Duke {
     private Ui ui;
 
     public Duke (String filepath) {
-        ui = new Ui();
+        ui = new Ui(); //Creates Command Line User Interface which calls Parser
         storage = new Storage(filepath);
         try {
-            tasks = new TaskList(storage.load());
+            tasks = new TaskList(storage.load()); //Loads existing data from persistent storage
         } catch (Exception e) {
             ui.showLoadingError();
             tasks = new TaskList();
@@ -16,13 +16,15 @@ public class Duke {
     }
 
     public void run() {
-        ui.run(tasks);
+        ui.run(tasks); //After constructor loads existing data/creates new file, run parser to get input
+        storage.updateStorage(tasks);
+        System.exit(0);
     }
 
     public static void main(String[] args) {
         String currentDir = System.getProperty("user.dir");
         String filePath = currentDir + "/src/main/java/task.txt";
-        new Duke(filePath).run();
+        new Duke(filePath).run(); //Creates Duke Object Instance and executes the method run()
     }
 
 }
